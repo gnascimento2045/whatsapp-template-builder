@@ -2,6 +2,10 @@
 
 WhatsApp template validator and generator with memory and AI-powered suggestions.
 
+## Use Online
+
+Visit the [live demo](https://gnascimento2045.github.io/whatsapp-template-builder/) and start building templates instantly.
+
 ## Features
 
 - **Dual-mode validation**: Lenient (Meta initial approval) and Strict (quality re-evaluation)
