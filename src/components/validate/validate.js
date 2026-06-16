@@ -190,6 +190,135 @@ function calculateScore(text, strict){
   return { score:score, category:category, confidence:confidence, marketing:marketing, utility:utility, forbidden:forbidden, openQ:openQ, concrete:concrete, feedbackGeneric:feedbackGeneric, uPoints:uPoints, mPoints:mPoints, deduction:deduc, mode:strict?'strict':'lenient' };
 }
 
+var SUGGEST_RULES = 'Regras para Classificacao de Templates WhatsApp\n\n'
++ 'Categoria UTILITY:\n'
++ '- O template deve informar o usuario sobre uma acao ou transacao que ele realizou, ou um status do servico contratado.\n'
++ '- Nao deve vender, engajar ou entreter.\n\n'
++ 'Padroes UTILITY:\n'
++ '- Status do sistema ("conta ativa", "sem restricoes", "funcionando normalmente")\n'
++ '- Referencia a pedido/transacao ("pedido {{numero}}", "sua compra", "seu pagamento")\n'
++ '- Dado financeiro concreto (valor, data, saldo, periodo)\n'
++ '- Acao clara para o usuario ("acesse sua conta", "pague agora", "registre")\n'
++ '- Instrucao de opt-out ("ignore se ja pagou", "desconsidere")\n'
++ '- Gestao de aceitacao ("confirmou seu consentimento", "confirmou sua preferencia")\n'
++ '- Continuacao cross-channel ("solicitou suporte pelo chat", "continuacao do seu contato")\n'
++ '- Feedback vinculado a pedido especifico ("sobre o pedido {{numero}}", "apos sua recente compra")\n\n'
++ 'Categoria MARKETING:\n'
++ '- O template promove, engaja, reativa ou vende algo. O usuario nao iniciou a acao.\n\n'
++ 'Padroes MARKETING:\n'
++ '- Pergunta aberta/conversacional ("como vai?", "tudo bem?", "o que achou?")\n'
++ '- Reengajamento ("lembrei de voce", "sinto sua falta", "quanto tempo")\n'
++ '- Linguagem promocional ("oferta", "desconto", "cupom", "oportunidade unica")\n'
++ '- Upsell/cross-sell ("subir de plano", "plano premium", "upgrade")\n'
++ '- Gatilho de urgencia ("ultima chance", "termina hoje", "vagas limitadas")\n'
++ '- Curiosidade ("voce sabia?", "que tal?")\n'
++ '- Feedback generico sem pedido ("como tem sido sua experiencia?")\n\n'
++ 'Regras de ouro:\n'
++ '1. Se o template menciona algo que o usuario fez -> UTILITY\n'
++ '2. Se menciona algo que a empresa quer que o usuario faca -> MARKETING\n'
++ '3. Perguntas abertas so sao aceitas em UTILITY se o contexto for de acao do usuario\n'
++ '4. Feedback generico SEMPRE precisa de referencia a pedido para ser UTILITY\n'
++ '5. Dados concretos (valor, data, status) fortalecem UTILITY\n'
++ '6. Acoes claras ("acesse", "pague", "registre") fortalecem UTILITY\n'
++ '7. Nunca usar: oferta, desconto, cupom, promocao, oportunidade, imperdivel em UTILITY\n'
++ '8. Opt-out ("ignore se ja") e sempre bem-vindo em UTILITY\n'
++ '9. Templates de confirmacao de opt-in/opt-out sao sempre UTILITY\n'
++ '10. Templates de continuacao de conversa (cross-channel) sao sempre UTILITY\n\n'
++ 'Estrutura de variaveis:\n'
++ '- Usar {{1}}, {{2}} para variaveis numericas\n'
++ '- Evitar {{texto}}, {{valor}}, {{data}} - podem causar rejeicao\n'
++ '- O template nao deve comecar ou terminar com variavel\n'
++ '- Maximo de 3 botoes (QUICK_REPLY, URL, PHONE_NUMBER, COPY_CODE)\n'
++ '- Corpo: maximo 1024 caracteres\n'
++ '- Header: maximo 60 caracteres\n'
++ '- Footer: maximo 60 caracteres';
+
+function suggestWithAI(){
+  var text = inputBody.value.trim();
+  if (!text) { showToast('Digite um template primeiro'); return; }
+
+  var url = localStorage.getItem('mt_api_url');
+  var model = localStorage.getItem('mt_api_model');
+  var key = localStorage.getItem('mt_api_key');
+
+  if (!url || !model || !key){
+    showToast('Configure URL, modelo e chave na aba Config');
+    document.querySelector('[data-tab="config"]').click();
+    return;
+  }
+
+  var container = document.getElementById('ia-suggestions');
+  container.innerHTML = '<div class="text-xs text-[#8696a0]">Gerando sugestoes...</div>';
+  container.style.display = 'block';
+
+  var similar = [];
+  if (window.MEMORY && window.MEMORY.length){
+    similar = window.MEMORY
+      .map(function(t){ return { item: t, sim: jaccardSimilarity(text, t.body) }; })
+      .filter(function(t){ return t.sim > 0.1; })
+      .sort(function(a,b){ return b.sim - a.sim; })
+      .slice(0, 5)
+      .map(function(t){ return t.item; });
+  }
+
+  var systemPrompt = 'Voce e um especialista em templates do WhatsApp Business API. '
+    + 'Sua funcao e analisar templates e sugerir variacoes que sejam aprovadas como UTILITY pela Meta.\n\n'
+    + '## REGRAS\n' + SUGGEST_RULES;
+
+  if (similar.length){
+    systemPrompt += '\n\n## Templates aprovados similares (memoria)\n';
+    similar.forEach(function(t){
+      systemPrompt += '- [' + t.category + '] ' + t.body + '\n';
+    });
+  }
+
+  systemPrompt += '\n\n## Instrucao\n'
+    + 'Analise o template do usuario e:\n'
+    + '1. Classifique o template atual como UTILITY ou MARKETING\n'
+    + '2. Explique sucintamente o motivo\n'
+    + '3. Sugira 2-3 variacoes que possam ser aprovadas como UTILITY\n'
+    + '4. Destaque quais elementos sao problematicos\n\n'
+    + 'Seja objetivo e direto. Responda em portugues.';
+
+  var userPrompt = 'Template atual:\n\n' + text;
+
+  fetch(url.replace(/\/+$/, '') + '/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + key
+    },
+    body: JSON.stringify({
+      model: model,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt }
+      ],
+      temperature: 0.7,
+      max_tokens: 2000
+    })
+  })
+  .then(function(resp){
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    return resp.json();
+  })
+  .then(function(data){
+    var content = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
+    if (!content) throw new Error('Resposta vazia da API');
+    var formatted = content
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g, '<br>');
+    container.innerHTML = '<div class="ia-suggestion-content">' + formatted + '</div>';
+  })
+  .catch(function(err){
+    container.innerHTML = '<div class="text-xs text-[#ef5350]">Erro: ' + err.message + '</div>';
+    showToast('Erro ao consultar IA');
+  });
+}
+
 function generateSuggestions(text){
   var s = [];
   var norm = normalize(text);
@@ -313,6 +442,10 @@ function validate(){
   html += '<button class="approve-btn utility" onclick="addToMemory(\''+raw.replace(/'/g,"\\'")+'\',\'UTILITY\','+r.score+',\''+r.mode+'\')">APROVADO COMO UTILITY</button>';
   html += '<button class="approve-btn marketing" onclick="addToMemory(\''+raw.replace(/'/g,"\\'")+'\',\'MARKETING\','+r.score+',\''+r.mode+'\')">APROVADO COMO MARKETING</button>';
   html += '</div>';
+
+  html += '<div class="section-label" style="margin-top:14px;">Sugestao com IA</div>';
+  html += '<button class="bg-[#00a884] text-white font-semibold text-xs px-4 py-1.5 rounded-md hover:bg-[#029972] transition-colors" onclick="suggestWithAI()">GERAR SUGESTOES COM IA</button>';
+  html += '<div id="ia-suggestions" style="display:none;margin-top:10px;"></div>';
   html += '</div></div>';
   area.innerHTML = html;
 

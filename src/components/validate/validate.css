@@ -278,3 +278,18 @@ select {
   color: #667781;
   margin-bottom: 4px;
 }
+
+.ia-suggestion-content {
+  background: #f7f8fa;
+  border: 1px solid #e9edef;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #3b4a54;
+  white-space: pre-wrap;
+}
+
+.ia-suggestion-content strong {
+  color: #00a884;
+}
