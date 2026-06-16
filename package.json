@@ -1,0 +1,12 @@
+{
+  "name": "watemplate-builder",
+  "version": "1.0.0",
+  "description": "WhatsApp template validator and generator with memory and AI suggestions",
+  "type": "module",
+  "scripts": {
+    "test": "node test/validator.test.js",
+    "start": "python3 -m http.server 3000"
+  },
+  "keywords": ["whatsapp", "meta", "utility", "template", "validator"],
+  "license": "MIT"
+}

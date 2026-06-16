@@ -1,0 +1,16 @@
+.mem-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.mem-item:last-child {
+  border-bottom: none;
+}
+
+.mem-body {
+  font-size: 13px;
+  color: #111b21;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  margin-bottom: 4px;
+}

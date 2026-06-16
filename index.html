@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WATemplate Builder</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="src/styles/global.css">
+<link rel="stylesheet" href="src/components/sidebar/sidebar.css">
+<link rel="stylesheet" href="src/components/preview/preview.css">
+<link rel="stylesheet" href="src/components/validate/validate.css">
+<link rel="stylesheet" href="src/components/library/library.css">
+<link rel="stylesheet" href="src/components/generate/generate.css">
+<link rel="stylesheet" href="src/components/memory/memory.css">
+<link rel="stylesheet" href="src/components/toast/toast.css">
+</head>
+<body>
+
+<div class="flex h-screen overflow-hidden">
+
+<aside class="w-56 bg-white border-r border-[#e9edef] flex flex-col flex-shrink-0" style="min-width:200px;">
+<div class="p-5 border-b border-[#e9edef]">
+<h1 class="text-lg font-extrabold tracking-tight text-[#00a884] leading-tight">
+WATemplate<br>Builder
+</h1>
+</div>
+<nav class="flex-1 p-3 space-y-1 overflow-y-auto">
+<button class="sidebar-btn active" data-tab="validate">
+<svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+Validar
+</button>
+<button class="sidebar-btn" data-tab="generate">
+<svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+Gerar
+</button>
+<button class="sidebar-btn" data-tab="library">
+<svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+Biblioteca
+</button>
+<button class="sidebar-btn" data-tab="memory">
+<svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+Memoria
+</button>
+<button class="sidebar-btn" data-tab="config">
+<svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+Config
+</button>
+</nav>
+<div class="p-4 border-t border-[#e9edef] text-[10px] text-[#8696a0] text-center leading-tight">
+v1.0<br>WATemplate Builder
+</div>
+</aside>
+
+<main class="flex-1 overflow-y-auto p-6 lg:p-8" style="max-width:780px;">
+
+<div class="panel active" id="panel-validate">
+<div class="bg-white rounded-xl shadow-sm border border-[#e9edef] p-5 mb-4">
+<h2 class="text-sm font-bold text-[#667781] uppercase tracking-wider mb-3">Validar template</h2>
+<div class="flex gap-2 flex-wrap mb-4">
+<button class="quick-btn" data-example="marketing">"Ola! Como vai?"</button>
+<button class="quick-btn" data-example="utility">Status check</button>
+<button class="quick-btn" data-example="financeiro">Resumo financeiro</button>
+<button class="quick-btn" data-example="feedback">Feedback generico</button>
+</div>
+
+<div class="mb-3">
+<label class="text-xs font-semibold text-[#8696a0] uppercase tracking-wider block mb-1.5">Cabecalho (opcional)</label>
+<input type="text" id="input-header" class="text-xs" placeholder="Texto do cabecalho..." oninput="updatePreview()">
+</div>
+
+<div class="mb-3">
+<label class="text-xs font-semibold text-[#8696a0] uppercase tracking-wider block mb-1.5">Corpo do template</label>
+<textarea id="input-body" class="mono" placeholder="Cole aqui o texto do seu template..." rows="4"></textarea>
+</div>
+
+<div class="mb-3">
+<label class="text-xs font-semibold text-[#8696a0] uppercase tracking-wider block mb-1.5">Rodape (opcional)</label>
+<input type="text" id="input-footer" class="text-xs" placeholder="Texto do rodape..." oninput="updatePreview()">
+</div>
+
+<div class="flex items-center gap-2 mb-3">
+<button class="text-xs font-semibold text-[#00a884] bg-[#e8f9f2] px-3 py-1.5 rounded-md hover:bg-[#d0f0e5] transition-colors" onclick="addVariable()">+ VARIAVEL</button>
+<span class="text-xs text-[#8696a0]">Use {{1}}, {{2}} no texto</span>
+</div>
+<div id="variable-samples" class="hidden mb-3"></div>
+
+<div class="mb-3">
+<label class="text-xs font-semibold text-[#8696a0] uppercase tracking-wider block mb-1.5">Botoes (opcional - preview apenas)</label>
+<div id="buttons-config" class="space-y-2 mb-2"></div>
+<button class="text-xs font-semibold text-[#00a884] bg-[#e8f9f2] px-3 py-1.5 rounded-md hover:bg-[#d0f0e5] transition-colors" onclick="addButton()">+ BOTAO</button>
+</div>
+
+<div class="flex items-center gap-3 mb-4 flex-wrap">
+<div class="flex items-center gap-2">
+<label class="text-xs font-semibold text-[#8696a0]">Modo:</label>
+<select id="input-mode" class="w-auto text-xs py-1.5 px-2">
+<option value="lenient">Leniente (aprovacao inicial)</option>
+<option value="strict">Rigoroso (reavaliacao qualidade)</option>
+</select>
+</div>
+</div>
+<button class="bg-[#00a884] text-white font-semibold text-sm px-5 py-2 rounded-lg hover:bg-[#029972] transition-colors" onclick="validate()">Validar</button>
+</div>
+<div id="result-area"></div>
+</div>
+
+<div class="panel" id="panel-generate">
+<div class="bg-white rounded-xl shadow-sm border border-[#e9edef] p-5 mb-4">
+<h2 class="text-sm font-bold text-[#667781] uppercase tracking-wider mb-3">Gerar templates</h2>
+<div class="mb-4">
+<label class="text-xs font-semibold text-[#8696a0] uppercase tracking-wider block mb-1.5">Contexto</label>
+<select id="gen-context" class="max-w-xs">
+<option value="opt_in">Gestao de aceitacao (opt-in)</option>
+<option value="cross_channel">Continuacao cross-channel</option>
+<option value="status_check">Verificacao de status</option>
+<option value="onboarding">Onboarding</option>
+<option value="alert">Alerta / Notificacao</option>
+<option value="confirmation">Confirmacao</option>
+</select>
+</div>
+<button class="bg-[#00a884] text-white font-semibold text-sm px-5 py-2 rounded-lg hover:bg-[#029972] transition-colors" onclick="generate()">Gerar</button>
+</div>
+<div id="gen-result"></div>
+</div>
+
+<div class="panel" id="panel-library">
+<div class="bg-white rounded-xl shadow-sm border border-[#e9edef] p-5">
+<h2 class="text-sm font-bold text-[#667781] uppercase tracking-wider mb-1">Biblioteca de referencia</h2>
+<p class="text-xs text-[#8696a0] mb-4">Clique em um template para carrega-lo na validacao</p>
+<div id="lib-list"></div>
+</div>
+</div>
+
+<div class="panel" id="panel-memory">
+<div class="bg-white rounded-xl shadow-sm border border-[#e9edef] p-5 mb-4">
+<div class="flex items-center justify-between mb-3">
+<h2 class="text-sm font-bold text-[#667781] uppercase tracking-wider">Memoria de aprovados</h2>
+<div class="flex gap-2">
+<button class="text-xs font-semibold text-[#00a884] bg-[#e8f9f2] px-3 py-1.5 rounded-md hover:bg-[#d0f0e5] transition-colors" onclick="exportMemory()">Exportar JSON</button>
+<button class="text-xs font-semibold text-[#667781] bg-[#f0f2f5] px-3 py-1.5 rounded-md hover:bg-[#e9edef] transition-colors" onclick="document.getElementById('import-input').click()">Importar JSON</button>
+<input type="file" id="import-input" accept=".json" class="hidden" onchange="importMemory(event)">
+<button class="text-xs font-semibold text-[#ef5350] bg-[#fde8e8] px-3 py-1.5 rounded-md hover:bg-[#f5c6c6] transition-colors" onclick="clearMemory()">Limpar</button>
+</div>
+</div>
+<div class="mb-3">
+<input type="text" id="memory-search" class="text-xs py-1.5" placeholder="Buscar na memoria..." oninput="renderMemory()">
+</div>
+</div>
+<div id="memory-list" class="bg-white rounded-xl shadow-sm border border-[#e9edef] p-4">
+<div class="empty-state"><h3>Nenhum template salvo</h3><p class="text-xs mt-1">Apos validar, clique em "Aprovado como UTILITY" ou "Aprovado como MARKETING"</p></div>
+</div>
+</div>
+
+<div class="panel" id="panel-config">
+<div class="bg-white rounded-xl shadow-sm border border-[#e9edef] p-5 mb-4">
+<h2 class="text-sm font-bold text-[#667781] uppercase tracking-wider mb-4">Configuracoes da IA</h2>
+<div class="mb-3">
+<label class="text-xs font-semibold text-[#8696a0] uppercase tracking-wider block mb-1.5">URL da API (OpenAI-compativel)</label>
+<input type="text" id="api-url-input" class="max-w-md text-xs" placeholder="https://api.openai.com/v1">
+</div>
+<div class="mb-3">
+<label class="text-xs font-semibold text-[#8696a0] uppercase tracking-wider block mb-1.5">Modelo</label>
+<input type="text" id="api-model-input" class="max-w-md text-xs" placeholder="gpt-4o-mini">
+</div>
+<div class="mb-3">
+<label class="text-xs font-semibold text-[#8696a0] uppercase tracking-wider block mb-1.5">Chave da API</label>
+<input type="password" id="api-key-input" class="max-w-md text-xs" placeholder="sk-...">
+<p class="text-xs text-[#8696a0] mt-1.5">Tudo fica salvo no navegador e nunca e enviado para servidores</p>
+</div>
+<button class="bg-[#00a884] text-white font-semibold text-sm px-5 py-2 rounded-lg hover:bg-[#029972] transition-colors" onclick="saveApiConfig()">Salvar</button>
+<div id="config-status" class="text-xs text-[#00a884] mt-2 hidden"></div>
+</div>
+<div class="bg-white rounded-xl shadow-sm border border-[#e9edef] p-5">
+<h2 class="text-sm font-bold text-[#667781] uppercase tracking-wider mb-2">Sugestao com IA</h2>
+<p class="text-xs text-[#8696a0] mb-3">Configure URL, modelo e chave acima. Depois use "Sugerir com IA" na validacao para gerar variacoes.</p>
+<div class="text-xs text-[#8696a0] leading-relaxed">
+<p>Como funciona:</p>
+<ol class="list-decimal ml-4 mt-1 space-y-1">
+<li>Salve templates aprovados na aba Memoria</li>
+<li>A IA usa esses exemplos como referencia</li>
+<li>Cada sugestao respeita as regras da Meta para categoria UTILITY</li>
+</ol>
+</div>
+</div>
+</div>
+
+</main>
+
+</div>
+
+<div id="preview-floating" class="preview-floating hidden">
+<div class="preview-window">
+<div class="preview-titlebar">
+<div class="preview-dots">
+<span class="dot dot-close"></span>
+<span class="dot dot-min"></span>
+<span class="dot dot-max"></span>
+</div>
+<span class="preview-title">WhatsApp Preview</span>
+</div>
+<div class="wa-mock">
+<div id="wa-empty" class="flex-1 flex items-center justify-center flex-col gap-2 text-[#8696a0] text-xs text-center">
+<svg class="w-10 h-10 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+<div>Digite um template para ver a preview</div>
+</div>
+<div id="wa-chat" class="hidden">
+<div class="wa-header-bar">
+<div class="wa-avatar">E</div>
+<div>
+<div class="wa-contact-name">EMPRESA X</div>
+<div class="wa-contact-status">geralmente ativa(o) agora</div>
+</div>
+</div>
+<div class="wa-date-divider">Hoje</div>
+<div class="wa-bubble received">
+<div id="wa-header-text" class="wa-header-text hidden"></div>
+<span id="wa-bubble-text"></span>
+<div id="wa-footer-text" class="wa-footer-text hidden"></div>
+<div class="wa-time" id="wa-time">12:00</div>
+</div>
+<div id="wa-buttons" class="wa-buttons hidden"></div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="src/data/patterns-data.js"></script>
+<script src="src/data/reference-data.js"></script>
+<script src="src/components/toast/toast.js"></script>
+<script src="src/components/memory/memory.js"></script>
+<script src="src/components/preview/preview.js"></script>
+<script src="src/components/validate/validate.js"></script>
+<script src="src/components/generate/generate.js"></script>
+<script src="src/components/library/library.js"></script>
+<script src="src/components/config/config.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>

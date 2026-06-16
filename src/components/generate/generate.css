@@ -1,0 +1,13 @@
+.gen-card {
+  background: #f7f8fa;
+  border: 1px solid #e9edef;
+  border-radius: 8px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all .15s;
+}
+
+.gen-card:hover {
+  border-color: #00a884;
+  box-shadow: 0 2px 8px rgba(0, 168, 132, 0.1);
+}

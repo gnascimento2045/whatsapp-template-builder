@@ -1,0 +1,28 @@
+.sidebar-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #667781;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+  font-family: inherit;
+}
+
+.sidebar-btn:hover {
+  background: #f0f2f5;
+  color: #111b21;
+}
+
+.sidebar-btn.active {
+  background: #e8f9f2;
+  color: #00a884;
+  font-weight: 600;
+}

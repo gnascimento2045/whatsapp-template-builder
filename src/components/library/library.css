@@ -1,0 +1,54 @@
+.lib-item {
+  padding: 14px 0;
+  border-bottom: 1px solid #f0f2f5;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.lib-item:last-child {
+  border-bottom: none;
+}
+
+.lib-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #00a884;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+.lib-body {
+  font-size: 13px;
+  color: #667781;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.lib-reason {
+  font-size: 12px;
+  color: #8696a0;
+  margin-top: 3px;
+}
+
+.lib-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 10px;
+  margin-top: 4px;
+}
+
+.lib-tag.utility {
+  background: #e8f9f2;
+  color: #00a884;
+  border: 1px solid #b8e6d6;
+}
+
+.lib-tag.marketing {
+  background: #fde8e8;
+  color: #ef5350;
+  border: 1px solid #f5c6c6;
+}

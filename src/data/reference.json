@@ -1,0 +1,129 @@
+{
+  "categories": {
+    "utility_strong": [
+      {
+        "name": "executive_summary",
+        "body": "Ol\\u00e1 {{1}}, segue o resumo financeiro da *{{2}}*. Per\\u00edodo: {{3}} *Total a Receber:* {{4}} *Total a Pagar:* {{5}} *Transa\\u00e7\\u00f5es pendentes:* {{6}} Acesse o sistema para mais detalhes.",
+        "reason": "Dados financeiros concretos (per\\u00edodo, valores, status). Sem pergunta aberta. A\\u00e7\\u00e3o clara: acessar.",
+        "source": "user"
+      },
+      {
+        "name": "payment_due_reminder",
+        "body": "Ol\\u00e1, {{texto}}, a sua conta {{texto}} de {{valor}} deve ser vencida em {{data}}. Pague agora para evitar interrup\\u00e7\\u00f5es no servi\\u00e7o.\\nIgnore se j\\u00e1 tiver pago.",
+        "reason": "Valor + data + a\\u00e7\\u00e3o clara (pagar) + opt-out. Template de refer\\u00eancia oficial da Meta.",
+        "source": "meta"
+      },
+      {
+        "name": "appointment_confirmation_1",
+        "body": "Ol\\u00e1, {{texto}}. Sua consulta para {{texto}} em {{data}} \\u00e0s {{texto}} est\\u00e1 confirmada.",
+        "reason": "Confirma\\u00e7\\u00e3o de a\\u00e7\\u00e3o do usu\\u00e1rio. Data/hora espec\\u00edficas. Sem pergunta. Template oficial Meta.",
+        "source": "meta"
+      },
+      {
+        "name": "installation_complete",
+        "body": "Ol\\u00e1, {{texto}}, a sua instala\\u00e7\\u00e3o {{texto}} est\\u00e1 conclu\\u00edda! O nosso t\\u00e9cnico configurou a sua liga\\u00e7\\u00e3o, e agora est\\u00e1 pronto para entrar online. Se tiver algum problema, contacte {{texto}}.",
+        "reason": "Status de conclus\\u00e3o de servi\\u00e7o. Info operacional. Template oficial Meta.",
+        "source": "meta"
+      },
+      {
+        "name": "low_balance_warning_3",
+        "body": "Ol\\u00e1, {{texto}}, o seu saldo \\u00e9 de {{valor}}. Por favor, recarregue para evitar interrup\\u00e7\\u00f5es.",
+        "reason": "Dado concreto (saldo) + a\\u00e7\\u00e3o direta (recarregar). Template oficial Meta.",
+        "source": "meta"
+      },
+      {
+        "name": "support_ticket_acknowledgement",
+        "body": "O seu pedido {{numero}} est\\u00e1 registado. Entraremos em contato dentro de {{numero}} horas.",
+        "reason": "Registro de a\\u00e7\\u00e3o do usu\\u00e1rio + prazo definido. 100% utility.",
+        "source": "meta"
+      },
+      {
+        "name": "account_balance_update",
+        "body": "Atualiza\\u00e7\\u00e3o di\\u00e1ria para a conta com final {{1234}}: seu saldo dispon\\u00edvel \\u00e9 {{valor}}.",
+        "reason": "Alerta de conta com dado concreto. Exemplo oficial Meta de 'Account alerts or updates'.",
+        "source": "meta"
+      },
+      {
+        "name": "order_confirmed_shipping",
+        "body": "Agradecemos a colabora\\u00e7\\u00e3o! O pedido {{order_number}} foi confirmado. Avisaremos assim que seu pacote estiver a caminho.",
+        "reason": "Confirma\\u00e7\\u00e3o de pedido com n\\u00famero espec\\u00edfico. Exemplo oficial Meta de 'Order management'.",
+        "source": "meta"
+      },
+      {
+        "name": "order_out_for_delivery",
+        "body": "Seu pedido {{order_number}} est\\u00e1 a caminho. O c\\u00f3digo de rastreio \\u00e9 {{tracking_ID}}, e a data prevista de entrega \\u00e9 {{date}}.",
+        "reason": "Status de pedido + tracking + data. Exemplo oficial Meta de 'Order management'.",
+        "source": "meta"
+      },
+      {
+        "name": "feedback_survey_with_order",
+        "body": "Entregamos seu pedido {{order_number}}. Se houver algum problema, entre em contato conosco abaixo.",
+        "reason": "Feedback survey aprovada como Utility: referencia pedido espec\\u00edfico. Exemplo oficial Meta.",
+        "source": "meta"
+      },
+      {
+        "name": "feedback_survey_store_visit",
+        "body": "Com seu feedback, podemos melhorar nossos servi\\u00e7os. Clique abaixo para fazer uma avalia\\u00e7\\u00e3o sobre sua recente visita \\u00e0 nossa loja {{store}}.",
+        "reason": "Feedback survey aprovada como Utility: referencia visita espec\\u00edfica. Exemplo oficial Meta.",
+        "source": "meta"
+      },
+      {
+        "name": "opt_in_confirmation",
+        "body": "Agradecemos por confirmar seu consentimento. Agora, voc\\u00ea receber\\u00e1 notifica\\u00e7\\u00f5es via WhatsApp.",
+        "reason": "Gest\\u00e3o de aceita\\u00e7\\u00e3o (opt-in). Exemplo oficial Meta.",
+        "source": "meta"
+      },
+      {
+        "name": "opt_out_confirmation",
+        "body": "Agradecemos por confirmar sua prefer\\u00eancia de cancelamento. Voc\\u00ea n\\u00e3o receber\\u00e1 mais mensagens nossas no WhatsApp.",
+        "reason": "Confirma\\u00e7\\u00e3o de opt-out. Exemplo oficial Meta.",
+        "source": "meta"
+      },
+      {
+        "name": "cross_channel_chat",
+        "body": "Ol\\u00e1! Vejo que voc\\u00ea solicitou suporte por meio do nosso chat online. Sou o assistente virtual do WhatsApp. Como posso ajudar?",
+        "reason": "Continua\\u00e7\\u00e3o de conversa iniciada em outro canal. Exemplo oficial Meta.",
+        "source": "meta"
+      },
+      {
+        "name": "primeira_compra",
+        "body": "Ol\\u00e1, {{1}}! Sua compra foi conclu\\u00edda com sucesso. Voc\\u00ea recebeu {{2}} nesta transa\\u00e7\\u00e3o. O valor j\\u00e1 est\\u00e1 dispon\\u00edvel na sua conta.",
+        "reason": "Transa\\u00e7\\u00e3o espec\\u00edfica + valores concretos + estado do sistema.",
+        "source": "generated"
+      },
+      {
+        "name": "account_status_1",
+        "body": "Ol\\u00e1, {{1}}. Realizamos uma verifica\\u00e7\\u00e3o no seu acesso ao sistema. Sua conta est\\u00e1 ativa e sem restri\\u00e7\\u00f5es no momento.",
+        "reason": "Status de sistema: verifica\\u00e7\\u00e3o de acesso + resultado (ativo/sem restri\\u00e7\\u00f5es). Utility puro.",
+        "source": "generated"
+      },
+      {
+        "name": "friendly_check_1",
+        "body": "Ol\\u00e1, {{1}}, tudo bem? Realizamos uma verifica\\u00e7\\u00e3o no seu acesso ao sistema. Sua conta est\\u00e1 ativa e funcionando normalmente.",
+        "reason": "Abertura amig\\u00e1vel + status de sistema. Passa no modo leniente.",
+        "source": "generated"
+      }
+    ],
+    "utility_weak": [
+      {
+        "name": "feedback_generico_1",
+        "body": "Ol\\u00e1 {{1}}, tudo bem? Gostaria de saber como tem sido sua experi\\u00eancia at\\u00e9 o momento. Seu feedback \\u00e9 muito importante. Como tem sido sua experi\\u00eancia?",
+        "reason": "Feedback generico SEM referencia a pedido. Meta: 'A generic survey will not be approved as utility.' Risco alto de reclassifica\\u00e7\\u00e3o.",
+        "issues": ["generic_feedback", "open_question", "no_order_reference"],
+        "source": "user"
+      },
+      {
+        "name": "payment_reminder_warning",
+        "body": "Ol\\u00e1, {{1}}! Estamos passando para lembrar que sua conta est\\u00e1 pr\\u00f3xima do vencimento. Data de vencimento: {{2}} Valor: R\\$ {{3}} Fique \\u00e0 vontade para nos chamar caso precise de ajuda.",
+        "reason": "Tem dados (valor, data) mas termina com 'Fique \\u00e0 vontade para nos chamar' \\u2192 convite conversacional.",
+        "issues": ["open_invitation", "no_clear_action"],
+        "source": "user"
+      }
+    ]
+  },
+  "scoring": {
+    "utility_threshold_strong": 60,
+    "utility_threshold_weak": 30,
+    "max_score": 100
+  }
+}

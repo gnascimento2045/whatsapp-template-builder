@@ -1,0 +1,303 @@
+{
+  "marketing": {
+    "open_question": {
+      "patterns": [
+        "como vai",
+        "tudo bem",
+        "tudo certo",
+        "como tem sido",
+        "o que achou",
+        "gostaria de saber",
+        "me conta",
+        "me fala",
+        "pode me dizer",
+        "podemos conversar",
+        "vamos conversar",
+        "qual foi a experiencia",
+        "como foi sua experiencia",
+        "como foi sua experiencia"
+      ],
+      "weight": 30,
+      "label": "Pergunta aberta / Conversacional"
+    },
+    "reengagement": {
+      "patterns": [
+        "lembrei de voce",
+        "sinto sua falta",
+        "saudades",
+        "faz tempo",
+        "quanto tempo",
+        "volta aqui",
+        "estava com saudade",
+        "sentimos sua falta"
+      ],
+      "weight": 30,
+      "label": "Reengajamento"
+    },
+    "promotional": {
+      "patterns": [
+        "oferta",
+        "promocao",
+        "desconto",
+        "cupom",
+        "oportunidade unica",
+        "imperdivel",
+        "corra",
+        "ultimos dias",
+        "por tempo limitado",
+        "aproveite",
+        "garanta",
+        "nao perca",
+        "condicao especial",
+        "exclusivo",
+        "presente",
+        "gratis",
+        "bonus",
+        "liquida",
+        "queima de estoque",
+        "codigo promocional"
+      ],
+      "weight": 30,
+      "label": "Linguagem promocional"
+    },
+    "upsell": {
+      "patterns": [
+        "subir de plano",
+        "plano premium",
+        "upgrade",
+        "versao paga",
+        "recursos exclusivos",
+        "desbloquear",
+        "liberar",
+        "avancado",
+        "premium",
+        "migrar sua planilha",
+        "renove agora",
+        "renovar"
+      ],
+      "weight": 25,
+      "label": "Upsell / Cross-sell"
+    },
+    "curiosity_gap": {
+      "patterns": [
+        "voce sabia",
+        "ja imaginou",
+        "que tal",
+        "e se"
+      ],
+      "weight": 20,
+      "label": "Gatilho de curiosidade"
+    },
+    "urgency": {
+      "patterns": [
+        "ultima chance",
+        "nao vai querer perder",
+        "termina hoje",
+        "acaba agora",
+        "vagas limitadas",
+        "restam apenas"
+      ],
+      "weight": 25,
+      "label": "Urgencia / Escassez"
+    },
+    "ps_style": {
+      "patterns": [
+        "p.s.",
+        "by the way",
+        "alias",
+        "enquanto isso",
+        "ja que voce esta aqui",
+        "aproveitando",
+        "de quebra"
+      ],
+      "weight": 15,
+      "label": "PS / Addendum cross-sell"
+    },
+    "welcome_no_transaction": {
+      "patterns": [
+        "bem-vindo",
+        "cadastro realizado",
+        "conta criada",
+        "registro confirmado"
+      ],
+      "weight": 20,
+      "label": "Welcome sem transacao especifica"
+    },
+    "generic_feedback": {
+      "patterns": [
+        "como tem sido sua experiencia",
+        "como foi sua experiencia",
+        "feedback sobre sua experiencia",
+        "sua experiencia ate o momento",
+        "o que achou da"
+      ],
+      "weight": 25,
+      "label": "Feedback generico (sem pedido)"
+    }
+  },
+  "utility": {
+    "system_status": {
+      "patterns": [
+        "conta ativa",
+        "status atualizado",
+        "categoria atualizada",
+        "acesso ativo",
+        "sem restricoes",
+        "funcionando normalmente",
+        "disponivel para uso",
+        "atualizado para",
+        "pronto para uso",
+        "ativa e funcionando",
+        "verificacao no seu acesso",
+        "nao identificamos nenhum",
+        "concluida",
+        "instalacao concluida"
+      ],
+      "weight": 20,
+      "label": "Status do sistema"
+    },
+    "transaction_ref": {
+      "patterns": [
+        "compra concluida",
+        "pagamento recebido",
+        "transacao",
+        "concluida com sucesso",
+        "recebido",
+        "confirmamos o recebimento",
+        "processado",
+        "concluido",
+        "entregamos seu pedido",
+        "entregue"
+      ],
+      "weight": 25,
+      "label": "Referencia a transacao"
+    },
+    "order_reference": {
+      "patterns": [
+        "pedido",
+        "numero do pedido",
+        "seu pedido",
+        "ordem",
+        "order number",
+        "sobre o pedido",
+        "compra",
+        "solicitacao",
+        "sua conta de",
+        "servico contratado",
+        "assinatura"
+      ],
+      "weight": 25,
+      "label": "Referencia a pedido / transacao"
+    },
+    "concrete_data": {
+      "patterns": [
+        "r$",
+        "valor de",
+        "total a receber",
+        "total a pagar",
+        "saldo de",
+        "periodo de",
+        "recebeu",
+        "utilizou"
+      ],
+      "weight": 20,
+      "label": "Dado financeiro concreto"
+    },
+    "dates": {
+      "patterns": [
+        "vencimento",
+        "validade",
+        "periodo",
+        "data"
+      ],
+      "weight": 15,
+      "label": "Data / Periodo especifico"
+    },
+    "clear_action": {
+      "patterns": [
+        "acesse sua conta",
+        "acesse o sistema",
+        "para consultar",
+        "para mais detalhes",
+        "registre sua",
+        "para comecar",
+        "acesse a plataforma",
+        "acesse sua conta para",
+        "clique abaixo",
+        "clique no link",
+        "pague agora",
+        "recarregue para",
+        "entre em contato"
+      ],
+      "weight": 15,
+      "label": "Acao clara para o usuario"
+    },
+    "opt_out": {
+      "patterns": [
+        "ignore se ja",
+        "desconsidere",
+        "caso ja tenha",
+        "desconsidere esta mensagem"
+      ],
+      "weight": 10,
+      "label": "Instrucao de opt-out"
+    },
+    "opt_in_management": {
+      "patterns": [
+        "confirmou seu consentimento",
+        "confirmar seu consentimento",
+        "confirmou sua preferencia",
+        "confirmar sua preferencia",
+        "aceitou receber",
+        "preferencia de cancelamento",
+        "nao recebera mais",
+        "recebera notificacoes"
+      ],
+      "weight": 30,
+      "label": "Gestao de aceitacao (opt-in)"
+    },
+    "cross_channel": {
+      "patterns": [
+        "solicitou suporte",
+        "continuacao",
+        "deu continuidade",
+        "transferencia",
+        "iniciou no",
+        "online chat",
+        "chat online",
+        "solicitou pelo",
+        "solicitou por meio do nosso",
+        "em outro canal"
+      ],
+      "weight": 20,
+      "label": "Continuacao de conversa (cross-channel)"
+    },
+    "feedback_with_order": {
+      "patterns": [
+        "sobre o pedido",
+        "sobre sua compra",
+        "sobre sua visita",
+        "pedido {{",
+        "apos sua recente"
+      ],
+      "weight": 15,
+      "label": "Feedback vinculado a pedido"
+    }
+  },
+  "forbidden_in_utility": {
+    "patterns": [
+      "como vai",
+      "tudo bem",
+      "tudo certo",
+      "me conta",
+      "conversar",
+      "gostaria de saber",
+      "fiquei curioso",
+      "passando para saber",
+      "responda com a letra",
+      "so responde",
+      "estou por aqui"
+    ],
+    "weight": 100
+  }
+}
