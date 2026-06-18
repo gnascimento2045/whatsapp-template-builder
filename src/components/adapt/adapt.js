@@ -6,7 +6,7 @@ var SYSTEM_PROMPT = 'Objetivo: adaptar a mensagem abaixo para TEMPLATE DE UTILID
 + '4) Manter o sentido original: informar que o recurso solicitado anteriormente foi disponibilizado/providenciado e perguntar se ainda deseja continuar com o atendimento ou solicitacao.\n'
 + '5) Tom: natural, simpatico, direto e profissional. Sem emojis.\n'
 + '6) Estrutura com quebra de linha:\n'
-+ '   Linha 1: saudacao (ex.: "Ola {{1}}, tudo bem?" ou "Ola {{1}}," seguido de "Tudo bem?" na mesma linha ou na linha seguinte)\n'
++ '   Linha 1: saudacao completa em uma unica linha, ex.: "Ola {{1}}, tudo bem?" ou "Ola {{1}}, como vai?"\n'
 + '   Linha em branco\n'
 + '   Mensagem principal informando a disponibilizacao do recurso\n'
 + '   Linha em branco\n'
@@ -16,8 +16,7 @@ var SYSTEM_PROMPT = 'Objetivo: adaptar a mensagem abaixo para TEMPLATE DE UTILID
 + '9) Entregar apenas as variacoes finais, sem explicacoes.\n\n'
 + 'Saida obrigatoria: gere 10 variacoes independentes seguindo exatamente as regras acima, neste formato:\n\n'
 + 'Variacao 1\n'
-+ 'Corpo: Ola {{1}},\n'
-+ 'Tudo bem?\n\n'
++ 'Corpo: Ola {{1}}, tudo bem?\n\n'
 + 'O recurso solicitado foi disponibilizado.\n\n'
 + 'Ainda deseja continuar com o atendimento?\n\n'
 + 'Variacao 2\n'
@@ -143,6 +142,7 @@ function loadVariation(body) {
   window.buttons = [];
   renderButtonsConfig();
 
+  document.getElementById('input-mode').value = 'strict';
   document.querySelector('[data-tab="validate"]').click();
   refreshVariableSamples();
   updatePreview();
