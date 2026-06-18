@@ -103,9 +103,15 @@ function renderVariations(variations) {
   variations.forEach(function(v, i) {
     var bodyHtml = v.body.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
 
+    var result = validateTemplate(v.body, 'EMPRESA X', true);
+    var catClass = result.category === 'UTILITY' ? 'pill pill-green' : 'pill pill-red';
+    var catLabel = result.category === 'UTILITY' ? 'UTILITY' : result.category === 'MARKETING' ? 'MARKETING' : 'RISCO';
+    var barClass = result.score >= 60 ? 'green' : result.score >= 30 ? 'amber' : 'red';
+
     html += '<div class="adapt-card">';
     html += '<div class="flex items-center justify-between mb-2">';
     html += '<span class="text-xs font-bold text-[#00a884]">Variacao ' + (i + 1) + '</span>';
+    html += '<span class="flex items-center gap-2"><span class="text-xs text-[#8696a0]">' + result.score + '/100</span><span class="text-[10px] font-bold px-1.5 py-0.5 rounded ' + catClass + '">' + catLabel + '</span></span>';
     html += '</div>';
 
     html += '<div class="adapt-field"><span class="adapt-field-label">Mensagem</span><span class="adapt-field-value">' + bodyHtml + '</span></div>';
