@@ -1,0 +1,87 @@
+.adapt-card {
+  background: #f7f8fa;
+  border: 1px solid #e9edef;
+  border-radius: 8px;
+  padding: 14px;
+  transition: all .15s;
+}
+
+.adapt-card:hover {
+  border-color: #00a884;
+  box-shadow: 0 2px 8px rgba(0, 168, 132, 0.1);
+}
+
+.adapt-field {
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+.adapt-field-label {
+  font-weight: 600;
+  color: #667781;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 10px;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.adapt-field-value {
+  color: #111b21;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.adapt-buttons-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.adapt-btn-pill {
+  font-size: 10px;
+  background: #e8f9f2;
+  color: #00a884;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.adapt-load-btn {
+  font-size: 11px;
+  font-weight: 600;
+  color: #00a884;
+  background: #e8f9f2;
+  padding: 4px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all .15s;
+  border: none;
+  margin-top: 6px;
+}
+
+.adapt-load-btn:hover {
+  background: #d0f0e5;
+}
+
+.adapt-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #8696a0;
+}
+
+.adapt-empty svg {
+  margin: 0 auto 12px;
+  opacity: 0.3;
+}
+
+.adapt-empty h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.adapt-empty p {
+  font-size: 12px;
+}
