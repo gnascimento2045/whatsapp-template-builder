@@ -1,40 +1,28 @@
-var SYSTEM_PROMPT = 'Objetivo: adaptar a mensagem abaixo para TEMPLATE DE UTILIDADE do WhatsApp (Meta), removendo qualquer traco promocional e mantendo apenas comunicacao transacional (confirmar, atualizar, suspender ou alterar uma acao previamente iniciada pelo usuario).\n\n'
-+ 'Mensagem original:\n\n'
+var SYSTEM_PROMPT = 'Objetivo: adaptar a mensagem abaixo para TEMPLATE DE UTILIDADE do WhatsApp (Meta), mantendo tom humano, cordial e informativo, sem carater promocional.\n\n'
 + 'Regras obrigatorias (siga a risca):\n'
-+ '1) Categoria: Utility. Proibido vender, ofertar, sugerir upgrade, cupom, desconto, novidade, "saiba mais", prova social.\n'
-+ '2) Contexto explicito de transacao: deixe claro qual acao do usuario esta sendo confirmada/atualizada (pedido, consulta, assinatura, pagamento, politica, acesso, ticket).\n'
-+ '3) Tom: informativo, objetivo, sem emojis, sem caixa alta exagerada, sem linguagem promocional. Portugues do Brasil.\n'
-+ '4) Estrutura do template: Header (opcional), Body (obrigatorio), Footer (opcional) e Botoes.\n'
-+ '5) Limites recomendados: Cabecalho <= 60 caracteres, Rodape <= 60 caracteres, Corpo ate 4 linhas curtas. Texto claro e direto.\n'
-+ '6) Variaveis: use {{1}}, {{2}}, {{3}}... onde houver dados dinâmicos (ex.: numero do pedido, data, horario, valor, link). Nada de placeholders fantasiosos.\n'
-+ '7) Botoes: traga exatamente 3 rotulos objetivos alinhados ao fluxo transacional (ex.: Confirmar, Reagendar, Ver detalhes). Sem rotulos comerciais.\n'
-+ '8) Nao inclua explicacoes, comentarios ou exemplos preenchidos. Entregue somente o conteudo final nas 5 variacoes.\n\n'
-+ 'Saida obrigatoria: gere 5 variacoes independentes, exatamente neste formato e ordem (sem linhas extras):\n\n'
++ '1) Categoria: Utility. Proibido conteudo promocional, vendas, ofertas, cupons, upsell ou qualquer linguagem comercial.\n'
++ '2) Iniciar sempre com: "Ola {{1}},"\n'
++ '3) Apos a saudacao, variar apenas expressoes simples e naturais como: "Tudo bem?", "Como vai?", "Tudo certo?", "Como voce esta?", sem usar frases como "Espero que esteja bem" ou similares.\n'
++ '4) Manter o sentido original: informar que o recurso solicitado anteriormente foi disponibilizado/providenciado e perguntar se ainda deseja continuar com o atendimento ou solicitacao.\n'
++ '5) Tom: natural, simpatico, direto e profissional. Sem emojis.\n'
++ '6) Estrutura com quebra de linha:\n'
++ '   Linha 1: saudacao (ex.: "Ola {{1}}, tudo bem?" ou "Ola {{1}}," seguido de "Tudo bem?" na mesma linha ou na linha seguinte)\n'
++ '   Linha em branco\n'
++ '   Mensagem principal informando a disponibilizacao do recurso\n'
++ '   Linha em branco\n'
++ '   Pergunta de continuidade\n'
++ '7) Nao adicionar informacoes novas, ofertas ou interpretacoes fora do contexto original.\n'
++ '8) Manter mensagens curtas e claras (estilo WhatsApp).\n'
++ '9) Entregar apenas as variacoes finais, sem explicacoes.\n\n'
++ 'Saida obrigatoria: gere 10 variacoes independentes seguindo exatamente as regras acima, neste formato:\n\n'
 + 'Variacao 1\n'
-+ 'Cabecalho: texto ou deixe em branco\n'
-+ 'Corpo: texto\n'
-+ 'Rodape: texto ou deixe em branco\n'
-+ 'Botoes: Botao 1 / Botao 2 / Botao 3\n\n'
++ 'Corpo: Ola {{1}},\n'
++ 'Tudo bem?\n\n'
++ 'O recurso solicitado foi disponibilizado.\n\n'
++ 'Ainda deseja continuar com o atendimento?\n\n'
 + 'Variacao 2\n'
-+ 'Cabecalho: texto ou deixe em branco\n'
-+ 'Corpo: texto\n'
-+ 'Rodape: texto ou deixe em branco\n'
-+ 'Botoes: Botao 1 / Botao 2 / Botao 3\n\n'
-+ 'Variacao 3\n'
-+ 'Cabecalho: texto ou deixe em branco\n'
-+ 'Corpo: texto\n'
-+ 'Rodape: texto ou deixe em branco\n'
-+ 'Botoes: Botao 1 / Botao 2 / Botao 3\n\n'
-+ 'Variacao 4\n'
-+ 'Cabecalho: texto ou deixe em branco\n'
-+ 'Corpo: texto\n'
-+ 'Rodape: texto ou deixe em branco\n'
-+ 'Botoes: Botao 1 / Botao 2 / Botao 3\n\n'
-+ 'Variacao 5\n'
-+ 'Cabecalho: texto ou deixe em branco\n'
-+ 'Corpo: texto\n'
-+ 'Rodape: texto ou deixe em branco\n'
-+ 'Botoes: Botao 1 / Botao 2 / Botao 3';
++ 'Corpo: ...\n\n'
++ '(e assim por diante ate Variacao 10)';
 
 function generateVariations() {
   var text = document.getElementById('adapt-input').value.trim();
@@ -69,8 +57,8 @@ function generateVariations() {
         { role: 'system', content: SYSTEM_PROMPT },
         { role: 'user', content: text }
       ],
-      temperature: 0.7,
-      max_tokens: 3000
+      temperature: 0.8,
+      max_tokens: 4000
     })
   })
   .then(function(resp) {
@@ -91,92 +79,50 @@ function generateVariations() {
 }
 
 function parseVariations(text) {
-  var lines = text.split('\n');
+  var blocks = text.split(/\n(?=Variacao\s+\d)/i);
   var variations = [];
-  var current = null;
 
-  for (var i = 0; i < lines.length; i++) {
-    var line = lines[i].trim();
-    if (!line) continue;
+  for (var b = 0; b < blocks.length; b++) {
+    var block = blocks[b].trim();
+    if (!block) continue;
 
-    var varMatch = line.match(/^Variacao\s*(\d+)/i);
-    if (varMatch) {
-      if (current) variations.push(current);
-      current = { index: parseInt(varMatch[1], 10), header: '', body: '', footer: '', buttons: [] };
-      continue;
-    }
-
-    if (!current) continue;
-
-    var hMatch = line.match(/^Cabecalho:\s*(.*)/i);
-    if (hMatch) {
-      current.header = hMatch[1].trim() === 'deixe em branco' ? '' : hMatch[1].trim();
-      continue;
-    }
-
-    var bMatch = line.match(/^Corpo:\s*(.*)/i);
-    if (bMatch) {
-      current.body = bMatch[1].trim();
-      continue;
-    }
-
-    var fMatch = line.match(/^Rodape:\s*(.*)/i);
-    if (fMatch) {
-      current.footer = fMatch[1].trim() === 'deixe em branco' ? '' : fMatch[1].trim();
-      continue;
-    }
-
-    var btnMatch = line.match(/^Botoes:\s*(.*)/i);
-    if (btnMatch) {
-      var btns = btnMatch[1].split('/').map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 0 && s !== 'deixe em branco'; });
-      current.buttons = btns;
-      continue;
+    var bodyMatch = block.match(/^Variacao\s+\d+\s*\nCorpo:\s*([\s\S]*)/i);
+    if (bodyMatch) {
+      variations.push({ body: bodyMatch[1].trim() });
     }
   }
 
-  if (current) variations.push(current);
   return variations;
 }
 
 function renderVariations(variations) {
+  window._lastVariations = variations;
   var container = document.getElementById('adapt-result');
   var html = '<div class="text-xs font-semibold text-[#667781] uppercase tracking-wider mb-3">' + variations.length + ' variacoes geradas</div>';
   html += '<div class="grid gap-3">';
 
   variations.forEach(function(v, i) {
+    var bodyHtml = v.body.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+
     html += '<div class="adapt-card">';
     html += '<div class="flex items-center justify-between mb-2">';
     html += '<span class="text-xs font-bold text-[#00a884]">Variacao ' + (i + 1) + '</span>';
     html += '</div>';
 
-    if (v.header) {
-      html += '<div class="adapt-field"><span class="adapt-field-label">Cabecalho</span><span class="adapt-field-value">' + escapeHtml(v.header) + '</span></div>';
-    }
+    html += '<div class="adapt-field"><span class="adapt-field-label">Mensagem</span><span class="adapt-field-value">' + bodyHtml + '</span></div>';
 
-    html += '<div class="adapt-field"><span class="adapt-field-label">Corpo</span><span class="adapt-field-value">' + escapeHtml(v.body) + '</span></div>';
-
-    if (v.footer) {
-      html += '<div class="adapt-field"><span class="adapt-field-label">Rodape</span><span class="adapt-field-value">' + escapeHtml(v.footer) + '</span></div>';
-    }
-
-    if (v.buttons && v.buttons.length) {
-      html += '<div class="adapt-field"><span class="adapt-field-label">Botoes</span><div class="adapt-buttons-row">';
-      v.buttons.forEach(function(btn) {
-        html += '<span class="adapt-btn-pill">' + escapeHtml(btn) + '</span>';
-      });
-      html += '</div></div>';
-    }
-
-    var bodyAttr = escapeHtml(v.body);
-    var headerAttr = escapeHtml(v.header || '');
-    var footerAttr = escapeHtml(v.footer || '');
-    var buttonsAttr = escapeHtml(JSON.stringify(v.buttons));
-    html += '<button class="adapt-load-btn" onclick="loadVariation(\'' + bodyAttr + '\',\'' + headerAttr + '\',\'' + footerAttr + '\',\'' + buttonsAttr + '\')">Carregar na validacao</button>';
+    html += '<button class="adapt-load-btn" onclick="loadVariationByIndex(' + i + ')">Carregar na validacao</button>';
     html += '</div>';
   });
 
   html += '</div>';
   container.innerHTML = html;
+}
+
+function loadVariationByIndex(index) {
+  var v = window._lastVariations && window._lastVariations[index];
+  if (!v) { showToast('Variacao nao encontrada'); return; }
+  loadVariation(v.body);
 }
 
 function escapeHtml(s) {
@@ -189,21 +135,12 @@ function unescapeHtml(s) {
   return s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
 }
 
-function loadVariation(body, header, footer, buttonsJson) {
+function loadVariation(body) {
   body = unescapeHtml(body);
-  header = unescapeHtml(header);
-  footer = unescapeHtml(footer);
-  var buttons = [];
-  try { buttons = JSON.parse(unescapeHtml(buttonsJson)); } catch(e) {}
-
   document.getElementById('input-body').value = body;
-  document.getElementById('input-header').value = header;
-  document.getElementById('input-footer').value = footer;
-
+  document.getElementById('input-header').value = '';
+  document.getElementById('input-footer').value = '';
   window.buttons = [];
-  buttons.forEach(function(btnText) {
-    window.buttons.push({ type: 'QUICK_REPLY', text: btnText, value: '' });
-  });
   renderButtonsConfig();
 
   document.querySelector('[data-tab="validate"]').click();
